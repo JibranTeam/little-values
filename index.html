@@ -247,8 +247,16 @@ a{color:inherit}
 .spread{display:grid;grid-template-columns:1fr;gap:4px;background:linear-gradient(var(--wood1),var(--wood2));border-radius:14px;padding:8px;max-width:var(--spread-w,460px);margin-inline:auto;box-shadow:0 14px 30px var(--shadow);transition:max-width .3s ease}
 .spread[data-orientation="landscape"]{--spread-w:820px}
 .spread[data-orientation="square"]{--spread-w:620px}
-.pg{background:#fff;border-radius:6px;overflow:hidden;display:block;min-width:0;color:#555}
+.pg{position:relative;background:#fff;border-radius:6px;overflow:hidden;display:block;min-width:0;color:#555;user-select:none;-webkit-user-select:none}
 .pg img,.pg canvas,.pg svg{width:100%;height:auto;display:block}
+.wm{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden}
+.wm span{display:block;transform:rotate(-24deg);text-align:center;font-family:var(--display);font-weight:900;font-size:clamp(19px,5.4vw,34px);line-height:1.25;letter-spacing:.05em;color:rgba(255,255,255,.6);text-shadow:0 1px 2px rgba(35,51,31,.45),0 0 22px rgba(255,255,255,.4);white-space:nowrap}
+.wm span i{font-style:normal;font-size:.62em;letter-spacing:.42em}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px auto 0;max-width:620px}
+.thumb{width:52px;height:68px;border:2px solid var(--line);border-radius:8px;overflow:hidden;padding:0;background:#fff;cursor:pointer;flex:0 0 auto}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb.on{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber)}
+.thumb .tnum{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-weight:900;color:var(--forest);background:#F7EDCF}
 .ctrl{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px auto 0;flex-wrap:wrap;max-width:460px}
 .count{font-weight:800;font-variant-numeric:tabular-nums}
 .drop{margin:22px auto 0;max-width:620px;border:2px dashed var(--leaf);border-radius:18px;padding:20px;text-align:center;background:#ffffff30}
@@ -408,7 +416,7 @@ details p{color:var(--muted);margin-top:10px}
     <div class="hd">
       <span class="ribbon"><span>Free preview</span></span>
       <h2>Turn the first pages</h2>
-      <p class="lead">See the artwork and words before you buy. Page images or a PDF can be added below, and large files are fine because they are read right in your browser.</p>
+      <p class="lead">See the artwork and words before you buy. Load up to 10 pages — images or a PDF — and flip through them right in your browser. Every preview page carries a Kindling Tales watermark.</p>
     </div>
     <div class="reader">
       <div class="spread" id="spread" aria-live="polite"></div>
@@ -417,10 +425,11 @@ details p{color:var(--muted);margin-top:10px}
         <span class="count" id="count"></span>
         <button class="btn sm" id="next" type="button" aria-label="Next page">Next →</button>
       </div>
+      <div class="thumbs" id="thumbs" aria-label="Loaded pages"></div>
     </div>
     <div class="drop" id="drop">
       <h3>Upload book pages</h3>
-      <p>Drop page images (JPG, PNG, WebP) or one PDF. Images show in file-name order.</p>
+      <p>Drop page images (JPG, PNG, WebP) or a PDF. Up to 10 pages load, watermarked as a Kindling Tales preview. Images show in file-name order — add more any time and they join the pages already loaded.</p>
       <input type="file" id="pagesFile" accept="image/*,application/pdf" multiple>
       <label class="btn sm" for="pagesFile" id="pickBtn" tabindex="0">Choose files</label>
       <button class="btn sm line" id="resetBtn" type="button" style="margin-left:8px">Use sample pages</button>
@@ -570,6 +579,8 @@ details p{color:var(--muted);margin-top:10px}
       im.onload=function(){setOrientation(im.naturalWidth,im.naturalHeight)};d.appendChild(im)}
     else if(p.canvas){setOrientation(p.canvas.width,p.canvas.height);d.appendChild(p.canvas)}
     else{d.innerHTML=p.html;setOrientation(3,4)}
+    var w=document.createElement('div');w.className='wm';w.setAttribute('aria-hidden','true');
+    w.innerHTML='<span>Kindling Tales<br><i>Preview</i></span>';d.appendChild(w);
     return d;
   }
   function render(){
@@ -579,6 +590,18 @@ details p{color:var(--muted);margin-top:10px}
     var pv=document.getElementById('prev'),nx=document.getElementById('next');
     pv.disabled=idx===0;nx.disabled=idx+1>=pages.length;
     pv.style.opacity=pv.disabled?.4:1;nx.style.opacity=nx.disabled?.4:1;
+    renderThumbs();
+  }
+  function renderThumbs(){
+    var t=document.getElementById('thumbs');if(!t)return;t.textContent='';
+    pages.forEach(function(p,i){
+      var b=document.createElement('button');b.type='button';b.className='thumb'+(i===idx?' on':'');
+      b.setAttribute('aria-label','Go to page '+(i+1));
+      if(p.src){var im=new Image();im.alt='';im.src=p.src;b.appendChild(im)}
+      else if(p.thumb){var im2=new Image();im2.alt='';im2.src=p.thumb;b.appendChild(im2)}
+      else{var n=document.createElement('span');n.className='tnum';n.textContent=i+1;b.appendChild(n)}
+      b.onclick=function(){idx=i;render()};t.appendChild(b);
+    });
   }
   function go(d){idx=Math.max(0,Math.min(pages.length-1,idx+d));render()}
   document.getElementById('prev').onclick=function(){go(-1)};
@@ -597,29 +620,35 @@ details p{color:var(--muted);margin-top:10px}
     return pdfReady;
   }
   function natural(a,b){return a.name.localeCompare(b.name,undefined,{numeric:true})}
-  async function loadPdf(file){
+  async function loadPdf(file,limit){
     msg.textContent='Loading PDF reader…';await ensurePdf();
     var pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise,out=[];
-    for(var i=1;i<=pdf.numPages;i++){
+    var total=Math.min(pdf.numPages,limit||pdf.numPages);
+    for(var i=1;i<=total;i++){
       msg.textContent='Reading PDF page '+i+' of '+pdf.numPages+'…';
       var pg=await pdf.getPage(i),vp=pg.getViewport({scale:1.4}),c=document.createElement('canvas');
       c.width=vp.width;c.height=vp.height;
       await pg.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
-      out.push({canvas:c});
+      var th=document.createElement('canvas'),tw=96;th.width=tw;th.height=Math.max(1,Math.round(c.height*tw/c.width));
+      th.getContext('2d').drawImage(c,0,0,th.width,th.height);
+      out.push({canvas:c,thumb:th.toDataURL('image/jpeg',.6)});
     }
     return out;
   }
+  var MAXP=10,custom=false;
   async function handle(list){
     var files=Array.from(list);if(!files.length)return;
+    var room=MAXP-(custom?pages.length:0);
+    if(room<=0){msg.textContent='Preview is full — 10 pages already loaded. Use "Use sample pages" to start over.';return}
     var pdfs=files.filter(function(f){return f.type==='application/pdf'||/\.pdf$/i.test(f.name)});
     var imgs=files.filter(function(f){return f.type.indexOf('image/')===0}).sort(natural),out=[];
     try{
-      if(pdfs.length){out=out.concat(await loadPdf(pdfs[0]))}
-      urls.forEach(function(u){URL.revokeObjectURL(u)});urls=[];
-      imgs.forEach(function(f){var u=URL.createObjectURL(f);urls.push(u);out.push({src:u,name:f.name})});
+      if(pdfs.length){out=out.concat(await loadPdf(pdfs[0],room))}
+      imgs.slice(0,Math.max(0,room-out.length)).forEach(function(f){var u=URL.createObjectURL(f);urls.push(u);out.push({src:u,name:f.name})});
       if(!out.length)throw new Error('No images or PDF found in that selection.');
-      pages=out;idx=0;render();
-      msg.textContent=out.length+' page'+(out.length>1?'s':'')+' loaded. Use Back and Next to flip.';
+      if(custom){pages=pages.concat(out)}else{pages=out;idx=0}
+      custom=true;render();
+      msg.textContent=out.length+' page'+(out.length>1?'s':'')+' added — '+pages.length+' of '+MAXP+' in the preview, watermarked. Use Back and Next, or tap a thumbnail, to flip.';
     }catch(err){msg.textContent=err.message||'Could not read those files.'}
   }
   var pick=document.getElementById('pagesFile'),drop=document.getElementById('drop');
@@ -628,7 +657,7 @@ details p{color:var(--muted);margin-top:10px}
   ['dragenter','dragover'].forEach(function(t){drop.addEventListener(t,function(e){e.preventDefault();drop.classList.add('over')})});
   ['dragleave','drop'].forEach(function(t){drop.addEventListener(t,function(e){e.preventDefault();drop.classList.remove('over')})});
   drop.addEventListener('drop',function(e){handle(e.dataTransfer.files)});
-  document.getElementById('resetBtn').onclick=function(){urls.forEach(function(u){URL.revokeObjectURL(u)});urls=[];pages=samples.slice();idx=0;render();msg.textContent='Sample pages restored.'};
+  document.getElementById('resetBtn').onclick=function(){urls.forEach(function(u){URL.revokeObjectURL(u)});urls=[];custom=false;pages=samples.slice();idx=0;render();msg.textContent='Sample pages restored.'};
   var tx=null;
   spreadEl.addEventListener('touchstart',function(e){tx=e.changedTouches[0].clientX},{passive:true});
   spreadEl.addEventListener('touchend',function(e){if(tx===null)return;var dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>40)go(dx<0?1:-1)},{passive:true});
