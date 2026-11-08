@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>Little Values, Big Impact | 30 Virtues for Kind, Confident Kids</title>
 <meta name="description" content="Little Values, Big Impact is a digital children's book with 30 virtues — kindness, courage, honesty and more — for bedtime reading, classrooms and family conversations. Preview the first pages free.">
-<meta name="theme-color" content="#2F5A2A">
+<meta name="theme-color" content="#F7EFD2">
 <!-- TODO before launch: replace example.com with your real domain in the canonical, og:url and JSON-LD URLs below. -->
 <link rel="canonical" href="https://example.com/">
 <meta property="og:type" content="website">
@@ -18,6 +18,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="forest-bg.webp" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:wght@400;600;800&display=swap">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Book","name":"Little Values, Big Impact","bookFormat":"https://schema.org/EBook","inLanguage":"en","numberOfPages":60,"url":"https://example.com/","image":"https://example.com/cover.webp","description":"A digital children's book with 30 virtues for bedtime reading, classrooms and family conversations.","author":{"@type":"Organization","name":"Kindling Tales"},"publisher":{"@type":"Organization","name":"Kindling Tales"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8}}
@@ -32,41 +33,41 @@
 <style>
 /* Layout: the page is the forest from the cover. A fixed blurred-forest scene sits behind stacked parchment pages; a wooden plank header, ribbon labels, a hanging wooden sign, a leaf canopy at the top and a flower meadow at the foot. */
 :root{
-  --bg:#2F5A2A; --veil:rgba(255,246,214,.18);
+  --bg:#F6EED6; --veil:rgba(255,246,214,.18);
   --paper-a:#FFF8E0; --paper-b:#F6E8BF; --paper-c:#E9D49A; --paper-edge:#B98A45;
   --ink:#23331F; --muted:#56644A; --line:#6B442333;
   --forest:#2E5A2B; --leaf:#5E9A3F; --amber:#E58A1F; --bark:#6B4423;
   --wood1:#80532C; --wood2:#5A3719; --on-wood:#FFF3D6;
-  --ribbon:#E7CF93; --night:#1E3A1B; --on-night:#F4EBD0;
+  --ribbon:#E7CF93; --night:#3A2A18; --on-night:#F4EBD0;
   --btn-text:#FFFFFF; --shadow:rgba(20,30,10,.35);
-  --sky:linear-gradient(180deg,#FBE9A9 0%,#EEE6A0 26%,#B5CF72 58%,#5C9440 100%);
+  --sky:url(forest-bg.webp) center top/cover no-repeat fixed;
   --pine-far:#8DB566; --pine-near:#3F7A33; --rays:rgba(255,246,196,.22);
-  --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6); --trunk-filter:none;
+  --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6);
   --display:'Young Serif',Georgia,'Times New Roman',serif;
   --body:'Nunito Sans','Segoe UI',system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0F1D0E; --veil:rgba(6,14,6,.72);
+  --bg:#20180F; --veil:rgba(6,14,6,.72);
   --paper-a:#34301F; --paper-b:#2B281A; --paper-c:#232016; --paper-edge:#7A5B2B;
   --ink:#F4EBD0; --muted:#C2CCB0; --line:#F4EBD026;
   --forest:#9ED47A; --leaf:#8FCB6B; --amber:#F2A03A; --bark:#D9B382;
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
-  --ribbon:#4A4125; --night:#0B160B; --on-night:#E9E1C6;
+  --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,#13203F 0%,#1B3340 30%,#173324 65%,#0C1A0E 100%);
+  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
-  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); --trunk-filter:brightness(.5) saturate(.85); color-scheme:dark}}
+  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F1D0E; --veil:rgba(6,14,6,.72);
+  --bg:#20180F; --veil:rgba(6,14,6,.72);
   --paper-a:#34301F; --paper-b:#2B281A; --paper-c:#232016; --paper-edge:#7A5B2B;
   --ink:#F4EBD0; --muted:#C2CCB0; --line:#F4EBD026;
   --forest:#9ED47A; --leaf:#8FCB6B; --amber:#F2A03A; --bark:#D9B382;
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
-  --ribbon:#4A4125; --night:#0B160B; --on-night:#E9E1C6;
+  --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,#13203F 0%,#1B3340 30%,#173324 65%,#0C1A0E 100%);
+  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
-  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); --trunk-filter:brightness(.5) saturate(.85); color-scheme:dark}
+  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -80,13 +81,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .rays{position:absolute;inset:-20% -10% 25% -10%;
   background:repeating-linear-gradient(105deg,transparent 0 90px,var(--rays) 90px 160px,transparent 160px 280px);
   -webkit-mask-image:linear-gradient(#000,transparent 88%);mask-image:linear-gradient(#000,transparent 88%)}
-.pines{position:absolute;left:0;bottom:0;width:calc(100% + 700px);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 700 260%22 width=%22700%22 height=%22260%22%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2231%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2234,89.0 4.9,147.1 63.1,147.1%22/%3E%3Cpolygon points=%2234,123.2 -5.0,181.3 73.0,181.3%22/%3E%3Cpolygon points=%2234,157.4 -14.8,215.5 82.8,215.5%22/%3E%3Cpolygon points=%2234,191.6 -24.7,249.7 92.7,249.7%22/%3E%3Crect x=%2295%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2298,111.0 72.7,161.7 123.3,161.7%22/%3E%3Cpolygon points=%2298,140.8 64.1,191.5 131.9,191.5%22/%3E%3Cpolygon points=%2298,170.6 55.4,221.3 140.6,221.3%22/%3E%3Cpolygon points=%2298,200.4 46.8,251.1 149.2,251.1%22/%3E%3Crect x=%22157%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22160,80.0 129.4,141.2 190.6,141.2%22/%3E%3Cpolygon points=%22160,116.0 119.0,177.2 201.0,177.2%22/%3E%3Cpolygon points=%22160,152.0 108.6,213.2 211.4,213.2%22/%3E%3Cpolygon points=%22160,188.0 98.2,249.2 221.8,249.2%22/%3E%3Crect x=%22229%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22232,47.0 195.8,119.4 268.2,119.4%22/%3E%3Cpolygon points=%22232,89.6 183.5,162.0 280.5,162.0%22/%3E%3Cpolygon points=%22232,132.2 171.2,204.6 292.8,204.6%22/%3E%3Cpolygon points=%22232,174.8 158.9,247.2 305.1,247.2%22/%3E%3Crect x=%22297%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22300,124.0 276.9,170.2 323.1,170.2%22/%3E%3Cpolygon points=%22300,151.2 269.0,197.4 331.0,197.4%22/%3E%3Cpolygon points=%22300,178.4 261.2,224.6 338.8,224.6%22/%3E%3Cpolygon points=%22300,205.6 253.3,251.8 346.7,251.8%22/%3E%3Crect x=%22363%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22366,121.0 342.4,168.3 389.6,168.3%22/%3E%3Cpolygon points=%22366,148.8 334.3,196.1 397.7,196.1%22/%3E%3Cpolygon points=%22366,176.6 326.3,223.9 405.7,223.9%22/%3E%3Cpolygon points=%22366,204.4 318.3,251.7 413.7,251.7%22/%3E%3Crect x=%22435%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22438,25.0 398.1,104.9 477.9,104.9%22/%3E%3Cpolygon points=%22438,72.0 384.5,151.9 491.5,151.9%22/%3E%3Cpolygon points=%22438,119.0 370.9,198.9 505.1,198.9%22/%3E%3Cpolygon points=%22438,166.0 357.3,245.9 518.7,245.9%22/%3E%3Crect x=%22502%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22505,62.0 471.3,129.3 538.7,129.3%22/%3E%3Cpolygon points=%22505,101.6 459.9,168.9 550.1,168.9%22/%3E%3Cpolygon points=%22505,141.2 448.5,208.5 561.5,208.5%22/%3E%3Cpolygon points=%22505,180.8 437.0,248.1 573.0,248.1%22/%3E%3Crect x=%22569%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22572,118.0 547.9,166.3 596.1,166.3%22/%3E%3Cpolygon points=%22572,146.4 539.7,194.7 604.3,194.7%22/%3E%3Cpolygon points=%22572,174.8 531.4,223.1 612.6,223.1%22/%3E%3Cpolygon points=%22572,203.2 523.2,251.5 620.8,251.5%22/%3E%3Crect x=%22637%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22640,84.0 610.1,143.8 669.9,143.8%22/%3E%3Cpolygon points=%22640,119.2 599.9,179.0 680.1,179.0%22/%3E%3Cpolygon points=%22640,154.4 589.7,214.2 690.3,214.2%22/%3E%3Cpolygon points=%22640,189.6 579.6,249.4 700.4,249.4%22/%3E%3Crect x=%22673%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22676,56.0 641.3,125.4 710.7,125.4%22/%3E%3Cpolygon points=%22676,96.8 629.5,166.2 722.5,166.2%22/%3E%3Cpolygon points=%22676,137.6 617.7,207.0 734.3,207.0%22/%3E%3Cpolygon points=%22676,178.4 605.9,247.8 746.1,247.8%22/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 700 260%22 width=%22700%22 height=%22260%22%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2231%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2234,89.0 4.9,147.1 63.1,147.1%22/%3E%3Cpolygon points=%2234,123.2 -5.0,181.3 73.0,181.3%22/%3E%3Cpolygon points=%2234,157.4 -14.8,215.5 82.8,215.5%22/%3E%3Cpolygon points=%2234,191.6 -24.7,249.7 92.7,249.7%22/%3E%3Crect x=%2295%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2298,111.0 72.7,161.7 123.3,161.7%22/%3E%3Cpolygon points=%2298,140.8 64.1,191.5 131.9,191.5%22/%3E%3Cpolygon points=%2298,170.6 55.4,221.3 140.6,221.3%22/%3E%3Cpolygon points=%2298,200.4 46.8,251.1 149.2,251.1%22/%3E%3Crect x=%22157%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22160,80.0 129.4,141.2 190.6,141.2%22/%3E%3Cpolygon points=%22160,116.0 119.0,177.2 201.0,177.2%22/%3E%3Cpolygon points=%22160,152.0 108.6,213.2 211.4,213.2%22/%3E%3Cpolygon points=%22160,188.0 98.2,249.2 221.8,249.2%22/%3E%3Crect x=%22229%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22232,47.0 195.8,119.4 268.2,119.4%22/%3E%3Cpolygon points=%22232,89.6 183.5,162.0 280.5,162.0%22/%3E%3Cpolygon points=%22232,132.2 171.2,204.6 292.8,204.6%22/%3E%3Cpolygon points=%22232,174.8 158.9,247.2 305.1,247.2%22/%3E%3Crect x=%22297%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22300,124.0 276.9,170.2 323.1,170.2%22/%3E%3Cpolygon points=%22300,151.2 269.0,197.4 331.0,197.4%22/%3E%3Cpolygon points=%22300,178.4 261.2,224.6 338.8,224.6%22/%3E%3Cpolygon points=%22300,205.6 253.3,251.8 346.7,251.8%22/%3E%3Crect x=%22363%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22366,121.0 342.4,168.3 389.6,168.3%22/%3E%3Cpolygon points=%22366,148.8 334.3,196.1 397.7,196.1%22/%3E%3Cpolygon points=%22366,176.6 326.3,223.9 405.7,223.9%22/%3E%3Cpolygon points=%22366,204.4 318.3,251.7 413.7,251.7%22/%3E%3Crect x=%22435%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22438,25.0 398.1,104.9 477.9,104.9%22/%3E%3Cpolygon points=%22438,72.0 384.5,151.9 491.5,151.9%22/%3E%3Cpolygon points=%22438,119.0 370.9,198.9 505.1,198.9%22/%3E%3Cpolygon points=%22438,166.0 357.3,245.9 518.7,245.9%22/%3E%3Crect x=%22502%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22505,62.0 471.3,129.3 538.7,129.3%22/%3E%3Cpolygon points=%22505,101.6 459.9,168.9 550.1,168.9%22/%3E%3Cpolygon points=%22505,141.2 448.5,208.5 561.5,208.5%22/%3E%3Cpolygon points=%22505,180.8 437.0,248.1 573.0,248.1%22/%3E%3Crect x=%22569%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22572,118.0 547.9,166.3 596.1,166.3%22/%3E%3Cpolygon points=%22572,146.4 539.7,194.7 604.3,194.7%22/%3E%3Cpolygon points=%22572,174.8 531.4,223.1 612.6,223.1%22/%3E%3Cpolygon points=%22572,203.2 523.2,251.5 620.8,251.5%22/%3E%3Crect x=%22637%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22640,84.0 610.1,143.8 669.9,143.8%22/%3E%3Cpolygon points=%22640,119.2 599.9,179.0 680.1,179.0%22/%3E%3Cpolygon points=%22640,154.4 589.7,214.2 690.3,214.2%22/%3E%3Cpolygon points=%22640,189.6 579.6,249.4 700.4,249.4%22/%3E%3Crect x=%22673%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22676,56.0 641.3,125.4 710.7,125.4%22/%3E%3Cpolygon points=%22676,96.8 629.5,166.2 722.5,166.2%22/%3E%3Cpolygon points=%22676,137.6 617.7,207.0 734.3,207.0%22/%3E%3Cpolygon points=%22676,178.4 605.9,247.8 746.1,247.8%22/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom}
-.pines.far{height:240px;background:var(--pine-far);-webkit-mask-size:auto 240px;mask-size:auto 240px;opacity:.85;bottom:6vh}
-.pines.near{height:170px;background:var(--pine-near);-webkit-mask-size:auto 170px;mask-size:auto 170px;-webkit-mask-position:-300px bottom;mask-position:-300px bottom}
-.trunk{position:absolute;top:0;bottom:0;width:clamp(14px,calc((100vw - 1100px) / 2 + 60px),210px);filter:var(--trunk-filter);
-  background-repeat:repeat-y;background-size:210px auto}
-.trunk.l{left:0;background-image:url(trunk-l.webp);background-position:left top}
-.trunk.r{right:0;background-image:url(trunk-r.webp);background-position:right top}
 
 /* flying creatures, leaves and fireflies */
 .fx{position:fixed;inset:0;z-index:5;pointer-events:none;overflow:hidden}
@@ -117,7 +111,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:1}}
 .ff{width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px 4px var(--glow-soft);animation:drift var(--dur) ease-in-out var(--delay) infinite,twinkle var(--tw) ease-in-out var(--delay) infinite}
 @media(max-width:640px){.bee~.bee,.ff:nth-child(n+5),.leaf:nth-child(n+8),.bfly~.bfly{display:none}}
-@media(prefers-reduced-motion:reduce){.fx,.rays{display:none}.trunk{background-position-y:0!important}}
+@media(prefers-reduced-motion:reduce){.fx,.rays{display:none}}
 
 /* scroll reveal and small delights */
 .rv{transform:translateY(26px);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -289,7 +283,7 @@ details p{color:var(--muted);margin-top:10px}
 
 /* buy */
 .buy{position:relative;border-radius:30px;overflow:hidden;color:#FFF6DC;margin-block:clamp(22px,4vw,44px);
-  background:#1F4A1F;border:2px solid var(--paper-edge);box-shadow:0 22px 50px var(--shadow)}
+  background:#3A2A18;border:2px solid var(--paper-edge);box-shadow:0 22px 50px var(--shadow)}
 .buy .in{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,56px);align-items:center;padding:clamp(28px,6vw,64px)}
 .buy .in>*{min-width:0}
 .buy h2{color:#FFF6DC;margin-top:14px}
@@ -332,9 +326,6 @@ details p{color:var(--muted);margin-top:10px}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <div class="scene" aria-hidden="true">
   <div class="rays"></div>
-  <div class="trunk l"></div><div class="trunk r"></div>
-  <div class="pines far" id="pinesFar"></div>
-  <div class="pines near" id="pinesNear"></div>
 </div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 
