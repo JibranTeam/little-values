@@ -1,0 +1,9 @@
+{
+  "name": "Little Values, Big Impact",
+  "short_name": "Little Values",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#2F5A2A",
+  "theme_color": "#2F5A2A",
+  "icons": [{"src": "cover.webp", "sizes": "760x950", "type": "image/webp"}]
+}
