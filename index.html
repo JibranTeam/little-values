@@ -643,6 +643,32 @@ details p{color:var(--muted);margin-top:10px}
     return out;
   }
   var MAXP=10,custom=false;
+  function savePageToDb(file){
+    function post(name,mime,b64){
+      return fetch('/api/pages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fileName:name,mimeType:mime,dataBase64:b64})}).then(function(x){return x.ok}).catch(function(){return false});
+    }
+    if(file.size<=1500000){
+      return new Promise(function(res){
+        var r=new FileReader();
+        r.onload=function(){post(file.name,file.type,r.result.split(',')[1]).then(res)};
+        r.onerror=function(){res(false)};
+        r.readAsDataURL(file);
+      });
+    }
+    return new Promise(function(res){
+      var url=URL.createObjectURL(file),im=new Image();
+      im.onload=function(){
+        URL.revokeObjectURL(url);
+        var scale=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight));
+        var c=document.createElement('canvas');
+        c.width=Math.max(1,Math.round(im.naturalWidth*scale));c.height=Math.max(1,Math.round(im.naturalHeight*scale));
+        c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+        post(file.name,'image/jpeg',c.toDataURL('image/jpeg',.82).split(',')[1]).then(res);
+      };
+      im.onerror=function(){URL.revokeObjectURL(url);res(false)};
+      im.src=url;
+    });
+  }
   async function handle(list){
     var files=Array.from(list);if(!files.length)return;
     var room=MAXP-(custom?pages.length:0);
@@ -651,11 +677,13 @@ details p{color:var(--muted);margin-top:10px}
     var imgs=files.filter(function(f){return f.type.indexOf('image/')===0}).sort(natural),out=[];
     try{
       if(pdfs.length){out=out.concat(await loadPdf(pdfs[0],room))}
-      imgs.slice(0,Math.max(0,room-out.length)).forEach(function(f){var u=URL.createObjectURL(f);urls.push(u);out.push({src:u,name:f.name})});
+      var newFiles=[];
+      imgs.slice(0,Math.max(0,room-out.length)).forEach(function(f){var u=URL.createObjectURL(f);urls.push(u);out.push({src:u,name:f.name});newFiles.push(f)});
       if(!out.length)throw new Error('No images or PDF found in that selection.');
       if(custom){pages=pages.concat(out)}else{pages=out;idx=0}
       custom=true;render();
       msg.textContent=out.length+' page'+(out.length>1?'s':'')+' added — '+pages.length+' of '+MAXP+' in the preview, watermarked. Use Back and Next, or tap a thumbnail, to flip.';
+      if(newFiles.length){Promise.all(newFiles.map(savePageToDb)).then(function(rs){var ok=rs.filter(Boolean).length;msg.textContent+=' '+(ok===newFiles.length?'Saved to the database.':'Saved '+ok+' of '+newFiles.length+' to the database — the rest are in this browser only.')})}
     }catch(err){msg.textContent=err.message||'Could not read those files.'}
   }
   var pick=document.getElementById('pagesFile'),drop=document.getElementById('drop');
@@ -688,6 +716,11 @@ details p{color:var(--muted);margin-top:10px}
     .catch(function(){msgEl.textContent='That did not send. Please try again in a moment.'})
     .finally(function(){btn.disabled=false});
   });
+  fetch('/api/pages').then(function(r){if(!r.ok)throw new Error('no api');return r.json()}).then(function(list){
+    if(!list||!list.length)return;
+    pages=list.map(function(p){return {src:p.url,name:p.file_name}});custom=true;idx=0;render();
+    msg.textContent=pages.length+' saved page'+(pages.length>1?'s':'')+' loaded from the database.';
+  }).catch(function(){});
   render();
 })();
 </script>
