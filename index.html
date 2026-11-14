@@ -300,6 +300,11 @@ details p{color:var(--muted);margin-top:10px}
 .tick{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:8px}
 .tick li::before{content:"✓";margin-right:10px;font-weight:800;color:#C6F26B}
 .card{min-width:0;grid-template-columns:minmax(0,1fr);background:radial-gradient(130% 100% at 50% 0,var(--paper-a),var(--paper-b));color:var(--ink);border-radius:22px;padding:26px;display:grid;gap:14px;border:2px solid var(--paper-edge)}
+.coverbuy{position:relative;margin:0}
+.coverbuy img{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 10px 24px var(--shadow)}
+.pricetag{position:absolute;top:-12px;right:-8px;z-index:3;background:var(--amber);color:var(--btn-text);border-radius:14px;padding:10px 14px 8px;text-align:center;transform:rotate(6deg);box-shadow:0 8px 20px var(--shadow);font-family:var(--display);font-weight:900;line-height:1.1}
+.pricetag b{display:block;font-size:1.55rem}
+.pricetag small{font-family:var(--body);font-weight:800;font-size:.66rem;letter-spacing:.09em;text-transform:uppercase}
 .card .row{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
 .card .price{font-family:var(--display);font-size:2.1rem;color:var(--forest)}
 .card small{color:var(--muted)}
@@ -477,12 +482,14 @@ details p{color:var(--muted);margin-top:10px}
         <ul class="tick"><li>30 virtues in one book</li><li>Ages 4–8 · 60 pages (30 stories + 30 activities)</li><li>Read on any screen</li><li>A gift that grows with the child</li></ul>
       </div>
       <div class="card">
+        <figure class="coverbuy"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" loading="lazy" decoding="async"><span class="pricetag"><b id="priceTag">$19</b><small>Digital edition</small></span></figure>
         <div class="row"><b>Little Values, Big Impact</b><span class="price" id="price">Price</span></div>
         <small>Digital edition · by Kindling Tales</small>
         <a class="btn" id="buyBtn" href="#buy">Buy now</a>
         <form class="news" id="news">
           <label for="email" style="position:absolute;left:-9999px">Email address</label>
-          <input id="email" type="email" placeholder="Email for updates and free activities" required>
+          <input id="email" name="email" type="email" placeholder="Email for updates and free activities" required>
+          <input type="hidden" name="_subject" value="Little Values — new signup">
           <button class="btn sm line" type="submit">Join</button>
         </form>
         <div class="msg" id="newsMsg" role="status"></div>
@@ -503,7 +510,7 @@ details p{color:var(--muted);margin-top:10px}
   var SETTINGS={price:'$19',buyUrl:''};
 
   var price=document.getElementById('price'),buy=document.getElementById('buyBtn');
-  if(SETTINGS.price)price.textContent=SETTINGS.price;
+  if(SETTINGS.price){price.textContent=SETTINGS.price;var pt=document.getElementById('priceTag');if(pt)pt.textContent=SETTINGS.price}
   if(SETTINGS.buyUrl){buy.href=SETTINGS.buyUrl;buy.target='_blank';buy.rel='noopener'}
   document.getElementById('yr').textContent=new Date().getFullYear();
 
@@ -667,9 +674,19 @@ details p{color:var(--muted);margin-top:10px}
     document.querySelectorAll('.post').forEach(function(p){p.style.display=(f==='all'||p.getAttribute('data-cat')===f)?'':'none'});
   })});
 
+  /* Join form: posts to the shared Formspree form (endpoint xdeekyqk, same as THE JIMMY LAB contact form).
+     Submissions arrive at thejimmylab@gmail.com with subject "Little Values — new signup".
+     Formspree free plan: 50 submissions a month, shared with the Jimmy Lab form. */
   document.getElementById('news').addEventListener('submit',function(e){
     e.preventDefault();
-    document.getElementById('newsMsg').textContent='Thanks. Signup goes live once an email service is connected.';
+    var f=e.target,msgEl=document.getElementById('newsMsg'),btn=f.querySelector('button[type=submit]');
+    var email=document.getElementById('email').value.trim();
+    if(!email){msgEl.textContent='Please enter your email address.';return}
+    msgEl.textContent='Joining…';btn.disabled=true;
+    fetch('https://formspree.io/f/xdeekyqk',{method:'POST',headers:{'Accept':'application/json','Content-Type':'application/json'},body:JSON.stringify({email:email,_subject:'Little Values — new signup',form:'little-values-join'})})
+    .then(function(r){if(!r.ok)throw new Error('Formspree '+r.status);msgEl.textContent='Thanks — you are on the list. Watch your inbox for free activities.';f.reset()})
+    .catch(function(){msgEl.textContent='That did not send. Please try again in a moment.'})
+    .finally(function(){btn.disabled=false});
   });
   render();
 })();
