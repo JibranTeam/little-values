@@ -385,7 +385,7 @@ details p{color:var(--muted);margin-top:10px}
       <div class="bookwrap">
         <div class="float">
           <span class="sp" style="left:-2%;top:8%"></span><span class="sp" style="right:-3%;top:30%;animation-delay:1s"></span><span class="sp" style="left:6%;bottom:6%;animation-delay:2s"></span><span class="sp" style="right:4%;bottom:-2%;animation-delay:.5s;width:16px;height:16px"></span>
-          <div class="book" id="book"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" decoding="async" fetchpriority="high"></div>
+          <div class="book" id="book"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" decoding="async" fetchpriority="high"><span class="pricetag"><b id="priceTagHero">$9.99</b><small>Digital edition</small></span></div>
         </div>
       </div>
     </div>
@@ -497,7 +497,7 @@ details p{color:var(--muted);margin-top:10px}
       </div>
       <div class="card">
         <figure class="coverbuy"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" loading="lazy" decoding="async"><span class="pricetag"><b id="priceTag">$9.99</b><small>Digital edition</small></span></figure>
-        <div class="row"><b>Little Values, Big Impact</b><span class="price" id="price">Price</span></div>
+        <div class="row"><b>Little Values, Big Impact</b></div>
         <small>Digital edition · by Kindling Tales</small>
         <a class="btn" id="buyBtn" href="#buy">Buy now</a>
         <form class="news" id="news">
@@ -523,8 +523,8 @@ details p{color:var(--muted);margin-top:10px}
   /* EDIT HERE: set your price and checkout link (Gumroad, Stripe, Shopify, Etsy, etc.). Until buyUrl is set, Buy now scrolls back to this card — it does NOT take payment. */
   var SETTINGS={price:'$9.99',buyUrl:''};
 
-  var price=document.getElementById('price'),buy=document.getElementById('buyBtn');
-  if(SETTINGS.price){price.textContent=SETTINGS.price;var pt=document.getElementById('priceTag');if(pt)pt.textContent=SETTINGS.price}
+  var buy=document.getElementById('buyBtn');
+  if(SETTINGS.price){var pt=document.getElementById('priceTag');if(pt)pt.textContent=SETTINGS.price;var pth=document.getElementById('priceTagHero');if(pth)pth.textContent=SETTINGS.price}
   if(SETTINGS.buyUrl){buy.href=SETTINGS.buyUrl;buy.target='_blank';buy.rel='noopener'}
   document.getElementById('yr').textContent=new Date().getFullYear();
 
