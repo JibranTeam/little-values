@@ -39,7 +39,7 @@
   --wood1:#80532C; --wood2:#5A3719; --on-wood:#FFF3D6;
   --ribbon:#E7CF93; --night:#3A2A18; --on-night:#F4EBD0;
   --btn-text:#FFFFFF; --shadow:rgba(20,30,10,.35);
-  --sky:url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:url(forest-bg-hq.webp) center top/cover no-repeat fixed;
   --pine-far:#8DB566; --pine-near:#3F7A33; --rays:rgba(255,246,196,.22);
   --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6);
   --display:'Young Serif',Georgia,'Times New Roman',serif;
@@ -53,7 +53,7 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg-hq.webp) center top/cover no-repeat fixed;
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
   --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -64,7 +64,7 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg-hq.webp) center top/cover no-repeat fixed;
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
   --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}
 
@@ -78,15 +78,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(249,217,118,0) 0%,rgba(249,217,118,.26) 22%,rgba(141,181,102,.22) 55%,rgba(63,122,51,.28) 100%);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
-/* book-illustration tree trunks framing the left and right edges, fixed behind the page — big trunks with leaves, blended into the forest so there is no hard seam */
-.trunk{position:absolute;top:0;bottom:0;width:clamp(90px,15vh,220px);background-repeat:no-repeat;background-size:cover}
-.trunk-l{left:0;background-image:url(trunk-l.webp);background-position:left center;
-  -webkit-mask-image:linear-gradient(90deg,#000 55%,transparent 98%);
-  mask-image:linear-gradient(90deg,#000 55%,transparent 98%)}
-.trunk-r{right:0;background-image:url(trunk-r.webp);background-position:right center;
-  -webkit-mask-image:linear-gradient(270deg,#000 55%,transparent 98%);
-  mask-image:linear-gradient(270deg,#000 55%,transparent 98%)}
-@media(max-width:600px){.trunk{width:48px}}
 .content{position:relative;z-index:1}
 
 /* living forest scene */
@@ -352,8 +343,6 @@ details p{color:var(--muted);margin-top:10px}
 <div class="scene" aria-hidden="true">
   <div class="rays"></div>
   <div class="glow"></div>
-  <div class="trunk trunk-l"></div>
-  <div class="trunk trunk-r"></div>
 </div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 
