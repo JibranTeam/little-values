@@ -754,7 +754,9 @@ details p{color:var(--muted);margin-top:10px}
   window.addEventListener('scroll',function(){ if(t) return; t=setTimeout(function(){ t=null; save(); },150); },{passive:true});
   window.addEventListener('beforeunload',save);
   document.addEventListener('click',function(e){ if(e.target.closest('a[href]')) save(); });
-  function restore(){
+  // Restore instantly, right now (this script runs at end of body, before first paint),
+  // so the page opens directly on the section you left, never flashing the hero first.
+  (function restore(){
     var nav=null; try{ nav=performance.getEntriesByType('navigation')[0]; }catch(e){}
     var wantFlag=false;
     try{ wantFlag = sessionStorage.getItem('lv-restore')==='1'; if(wantFlag) sessionStorage.removeItem('lv-restore'); }catch(e){}
@@ -763,9 +765,9 @@ details p{color:var(--muted);margin-top:10px}
     if(location.hash) return;
     var y=null; try{ y=parseInt(sessionStorage.getItem(KEY),10); }catch(e){}
     if(y===null || isNaN(y) || y<=0) return;
-    requestAnimationFrame(function(){ window.scrollTo({top:y,behavior:'smooth'}); });
-  }
-  if(document.readyState==='complete'){ restore(); } else { window.addEventListener('load',restore); }
+    var _root=document.documentElement, _prev=_root.style.scrollBehavior;
+    _root.style.scrollBehavior='auto'; window.scrollTo(0, y); _root.style.scrollBehavior=_prev;
+  })();
 })();
 </script>
 </body></html>
