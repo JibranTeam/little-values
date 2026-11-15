@@ -743,4 +743,25 @@ details p{color:var(--muted);margin-top:10px}
 // Share links: index.html#read-<slug> opens the article page.
 (function(){var m={kindness:"blog-kindness-bedtime-stories.html",classroom:"blog-character-education-activities.html","family-habit":"blog-weekly-virtue-habit.html",honesty:"blog-talking-about-honesty.html",courage:"blog-teaching-courage.html",gratitude:"blog-gratitude-habits.html"};var h=location.hash||"";if(h.indexOf("#read-")===0){var s=h.slice(6);if(m[s]){location.replace(m[s]);}}})();
 </script>
+<script>
+// Smooth return: open a blog article (or any page) and come back, and glide to the same spot instead of jumping to the top.
+(function(){
+  if('scrollRestoration' in history){ try{ history.scrollRestoration='manual'; }catch(e){} }
+  var KEY='lv-scroll-'+location.pathname;
+  var t=null;
+  function save(){ try{ sessionStorage.setItem(KEY,String(window.scrollY||0)); }catch(e){} }
+  window.addEventListener('scroll',function(){ if(t) return; t=setTimeout(function(){ t=null; save(); },150); },{passive:true});
+  window.addEventListener('beforeunload',save);
+  document.addEventListener('click',function(e){ if(e.target.closest('a[href]')) save(); });
+  function restore(){
+    var nav=null; try{ nav=performance.getEntriesByType('navigation')[0]; }catch(e){}
+    if(!nav || (nav.type!=='back_forward' && nav.type!=='reload')) return;
+    if(location.hash) return;
+    var y=null; try{ y=parseInt(sessionStorage.getItem(KEY),10); }catch(e){}
+    if(y===null || isNaN(y) || y<=0) return;
+    requestAnimationFrame(function(){ window.scrollTo({top:y,behavior:'smooth'}); });
+  }
+  if(document.readyState==='complete'){ restore(); } else { window.addEventListener('load',restore); }
+})();
+</script>
 </body></html>
