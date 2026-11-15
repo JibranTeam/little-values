@@ -40,7 +40,7 @@
   --wood1:#80532C; --wood2:#5A3719; --on-wood:#FFF3D6;
   --ribbon:#E7CF93; --night:#3A2A18; --on-night:#F4EBD0;
   --btn-text:#FFFFFF; --shadow:rgba(20,30,10,.35);
-  --sky:url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,#F9D976 0%,#8DB566 55%,#3F7A33 100%);
   --pine-far:#8DB566; --pine-near:#3F7A33; --rays:rgba(255,246,196,.22);
   --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6);
   --display:'Young Serif',Georgia,'Times New Roman',serif;
@@ -54,7 +54,7 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,#2E2410 0%,#1E3B2E 55%,#0B1A10 100%);
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
   --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}}
 :root[data-theme="dark"]{
@@ -65,7 +65,7 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,#2E2410 0%,#1E3B2E 55%,#0B1A10 100%);
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
   --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}
 
@@ -75,6 +75,15 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17p
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;position:relative}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--wood2)}
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--sky),var(--bg)}
+/* book-illustration tree trunks framing the left and right edges, fixed behind the page */
+.trunk{position:absolute;top:0;bottom:0;width:clamp(64px,11vh,160px);background-repeat:no-repeat;background-size:auto 100%}
+.trunk-l{left:0;background-image:url(trunk-l.webp);background-position:left top}
+.trunk-r{right:0;background-image:url(trunk-r.webp);background-position:right top}
+/* pine silhouettes, pure CSS vector shapes (clip-path), no images */
+.pines{position:absolute;inset:0}
+.pine{position:absolute;bottom:0;background:var(--pine-far);clip-path:polygon(50% 0,60% 16%,56% 16%,68% 34%,62% 34%,80% 54%,72% 54%,84% 72%,60% 72%,58% 72%,58% 100%,42% 100%,42% 72%,40% 72%,16% 72%,28% 54%,20% 54%,38% 34%,32% 34%,44% 16%,40% 16%)}
+.pine.near{background:var(--pine-near)}
+@media(max-width:600px){.trunk{width:44px}.pine{transform:scale(.7);transform-origin:bottom center}}
 .content{position:relative;z-index:1}
 
 /* living forest scene */
@@ -339,6 +348,16 @@ details p{color:var(--muted);margin-top:10px}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <div class="scene" aria-hidden="true">
   <div class="rays"></div>
+  <div class="pines">
+    <span class="pine" style="left:96px;width:64px;height:110px"></span>
+    <span class="pine near" style="left:160px;width:88px;height:150px"></span>
+    <span class="pine" style="left:228px;width:56px;height:95px"></span>
+    <span class="pine" style="right:96px;width:64px;height:110px"></span>
+    <span class="pine near" style="right:160px;width:88px;height:150px"></span>
+    <span class="pine" style="right:228px;width:56px;height:95px"></span>
+  </div>
+  <div class="trunk trunk-l"></div>
+  <div class="trunk trunk-r"></div>
 </div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 
