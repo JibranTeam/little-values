@@ -755,7 +755,10 @@ details p{color:var(--muted);margin-top:10px}
   document.addEventListener('click',function(e){ if(e.target.closest('a[href]')) save(); });
   function restore(){
     var nav=null; try{ nav=performance.getEntriesByType('navigation')[0]; }catch(e){}
-    if(!nav || (nav.type!=='back_forward' && nav.type!=='reload')) return;
+    var wantFlag=false;
+    try{ wantFlag = sessionStorage.getItem('lv-restore')==='1'; if(wantFlag) sessionStorage.removeItem('lv-restore'); }catch(e){}
+    // Restore on back/forward/reload, or when the Back-to-blog link asked for the exact spot.
+    if(!wantFlag && (!nav || (nav.type!=='back_forward' && nav.type!=='reload'))) return;
     if(location.hash) return;
     var y=null; try{ y=parseInt(sessionStorage.getItem(KEY),10); }catch(e){}
     if(y===null || isNaN(y) || y<=0) return;
