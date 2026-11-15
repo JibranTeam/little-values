@@ -78,11 +78,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(249,217,118,0) 0%,rgba(249,217,118,.26) 22%,rgba(141,181,102,.22) 55%,rgba(63,122,51,.28) 100%);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
-/* book-illustration tree trunks framing the left and right edges, fixed behind the page */
-.trunk{position:absolute;top:0;bottom:0;width:clamp(64px,11vh,160px);background-repeat:no-repeat;background-size:auto 100%}
-.trunk-l{left:0;background-image:url(trunk-l.webp);background-position:left top}
-.trunk-r{right:0;background-image:url(trunk-r.webp);background-position:right top}
-@media(max-width:600px){.trunk{width:40px}}
+/* book-illustration tree trunks framing the left and right edges, fixed behind the page — big trunks with leaves, blended into the forest so there is no hard seam */
+.trunk{position:absolute;top:0;bottom:0;width:clamp(90px,15vh,220px);background-repeat:no-repeat;background-size:cover}
+.trunk-l{left:0;background-image:url(trunk-l.webp);background-position:left center;
+  -webkit-mask-image:linear-gradient(90deg,#000 55%,transparent 98%);
+  mask-image:linear-gradient(90deg,#000 55%,transparent 98%)}
+.trunk-r{right:0;background-image:url(trunk-r.webp);background-position:right center;
+  -webkit-mask-image:linear-gradient(270deg,#000 55%,transparent 98%);
+  mask-image:linear-gradient(270deg,#000 55%,transparent 98%)}
+@media(max-width:600px){.trunk{width:48px}}
 .content{position:relative;z-index:1}
 
 /* living forest scene */
