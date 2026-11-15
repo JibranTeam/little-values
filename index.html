@@ -75,18 +75,14 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17p
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--wood2)}
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--sky),var(--bg)}
 /* soft gold-to-green tint, minor and only around the central card column; forest stays fully visible at the edges */
-.glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(249,217,118,.38),rgba(141,181,102,.28) 55%,rgba(63,122,51,.34));
+.glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(249,217,118,0) 0%,rgba(249,217,118,.26) 22%,rgba(141,181,102,.22) 55%,rgba(63,122,51,.28) 100%);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent)}
 /* book-illustration tree trunks framing the left and right edges, fixed behind the page */
 .trunk{position:absolute;top:0;bottom:0;width:clamp(64px,11vh,160px);background-repeat:no-repeat;background-size:auto 100%}
 .trunk-l{left:0;background-image:url(trunk-l.webp);background-position:left top}
 .trunk-r{right:0;background-image:url(trunk-r.webp);background-position:right top}
-/* pine silhouettes, pure CSS vector shapes (clip-path), no images */
-.pines{position:absolute;inset:0}
-.pine{position:absolute;bottom:0;background:var(--pine-far);clip-path:polygon(50% 0,60% 16%,56% 16%,68% 34%,62% 34%,80% 54%,72% 54%,84% 72%,60% 72%,58% 72%,58% 100%,42% 100%,42% 72%,40% 72%,16% 72%,28% 54%,20% 54%,38% 34%,32% 34%,44% 16%,40% 16%)}
-.pine.near{background:var(--pine-near)}
-@media(max-width:600px){.trunk{width:44px}.pine{transform:scale(.7);transform-origin:bottom center}}
+@media(max-width:600px){.trunk{width:40px}}
 .content{position:relative;z-index:1}
 
 /* living forest scene */
@@ -352,14 +348,6 @@ details p{color:var(--muted);margin-top:10px}
 <div class="scene" aria-hidden="true">
   <div class="rays"></div>
   <div class="glow"></div>
-  <div class="pines">
-    <span class="pine" style="left:96px;width:64px;height:110px"></span>
-    <span class="pine near" style="left:160px;width:88px;height:150px"></span>
-    <span class="pine" style="left:228px;width:56px;height:95px"></span>
-    <span class="pine" style="right:96px;width:64px;height:110px"></span>
-    <span class="pine near" style="right:160px;width:88px;height:150px"></span>
-    <span class="pine" style="right:228px;width:56px;height:95px"></span>
-  </div>
   <div class="trunk trunk-l"></div>
   <div class="trunk trunk-r"></div>
 </div>
