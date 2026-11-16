@@ -18,7 +18,6 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="forest-bg.webp" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:wght@400;600;800&display=swap">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Book","name":"Little Values, Big Impact","bookFormat":"https://schema.org/EBook","inLanguage":"en","numberOfPages":60,"url":"https://example.com/","image":"https://example.com/cover.webp","description":"A digital children's book with 30 virtues for bedtime reading, classrooms and family conversations.","author":{"@type":"Organization","name":"Kindling Tales"},"publisher":{"@type":"Organization","name":"Kindling Tales"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8}}
@@ -40,9 +39,9 @@
   --wood1:#80532C; --wood2:#5A3719; --on-wood:#FFF3D6;
   --ribbon:#E7CF93; --night:#3A2A18; --on-night:#F4EBD0;
   --btn-text:#FFFFFF; --shadow:rgba(20,30,10,.35);
-  --sky:url(forest-bg.webp) center top/cover no-repeat fixed;
-  --pine-far:#8DB566; --pine-near:#3F7A33; --rays:rgba(255,246,196,.22);
-  --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6);
+  --sky:linear-gradient(180deg,#FBE9A9 0%,#F1E8AB 42%,#E0E4A0 66%,#B5CF72 84%,#6FA85A 100%);
+  --pine-far:#9CC178; --pine-near:#5A9448; --rays:rgba(255,246,196,.22);
+  --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6); --trunk-filter:none;
   --display:'Young Serif',Georgia,'Times New Roman',serif;
   --body:'Nunito Sans','Segoe UI',system-ui,sans-serif;
 }
@@ -54,9 +53,9 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,#13203F 0%,#1B3340 30%,#173324 65%,#0C1A0E 100%);
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
-  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}}
+  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); --trunk-filter:brightness(.5) saturate(.85); color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#20180F; --veil:rgba(6,14,6,.72);
   --paper-a:#34301F; --paper-b:#2B281A; --paper-c:#232016; --paper-edge:#7A5B2B;
@@ -65,9 +64,9 @@
   --wood1:#4F331A; --wood2:#38230F; --on-wood:#F7E9C6;
   --ribbon:#4A4125; --night:#171008; --on-night:#E9E1C6;
   --btn-text:#1B1205; --shadow:rgba(0,0,0,.55);
-  --sky:linear-gradient(180deg,rgba(12,9,5,.80),rgba(12,9,5,.62)),url(forest-bg.webp) center top/cover no-repeat fixed;
+  --sky:linear-gradient(180deg,#13203F 0%,#1B3340 30%,#173324 65%,#0C1A0E 100%);
   --pine-far:#1E3B2E; --pine-near:#0B1A10; --rays:rgba(190,215,255,.10);
-  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); color-scheme:dark}
+  --glow:#E2FF8A; --glow-soft:rgba(190,255,90,.65); --trunk-filter:brightness(.5) saturate(.85); color-scheme:dark}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -75,6 +74,13 @@ body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17p
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;position:relative}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--wood2)}
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--sky),var(--bg)}
+.pines{position:absolute;left:0;bottom:0;width:calc(100% + 700px);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 700 260%22 width=%22700%22 height=%22260%22%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2231%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2234,89.0 4.9,147.1 63.1,147.1%22/%3E%3Cpolygon points=%2234,123.2 -5.0,181.3 73.0,181.3%22/%3E%3Cpolygon points=%2234,157.4 -14.8,215.5 82.8,215.5%22/%3E%3Cpolygon points=%2234,191.6 -24.7,249.7 92.7,249.7%22/%3E%3Crect x=%2295%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2298,111.0 72.7,161.7 123.3,161.7%22/%3E%3Cpolygon points=%2298,140.8 64.1,191.5 131.9,191.5%22/%3E%3Cpolygon points=%2298,170.6 55.4,221.3 140.6,221.3%22/%3E%3Cpolygon points=%2298,200.4 46.8,251.1 149.2,251.1%22/%3E%3Crect x=%22157%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22160,80.0 129.4,141.2 190.6,141.2%22/%3E%3Cpolygon points=%22160,116.0 119.0,177.2 201.0,177.2%22/%3E%3Cpolygon points=%22160,152.0 108.6,213.2 211.4,213.2%22/%3E%3Cpolygon points=%22160,188.0 98.2,249.2 221.8,249.2%22/%3E%3Crect x=%22229%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22232,47.0 195.8,119.4 268.2,119.4%22/%3E%3Cpolygon points=%22232,89.6 183.5,162.0 280.5,162.0%22/%3E%3Cpolygon points=%22232,132.2 171.2,204.6 292.8,204.6%22/%3E%3Cpolygon points=%22232,174.8 158.9,247.2 305.1,247.2%22/%3E%3Crect x=%22297%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22300,124.0 276.9,170.2 323.1,170.2%22/%3E%3Cpolygon points=%22300,151.2 269.0,197.4 331.0,197.4%22/%3E%3Cpolygon points=%22300,178.4 261.2,224.6 338.8,224.6%22/%3E%3Cpolygon points=%22300,205.6 253.3,251.8 346.7,251.8%22/%3E%3Crect x=%22363%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22366,121.0 342.4,168.3 389.6,168.3%22/%3E%3Cpolygon points=%22366,148.8 334.3,196.1 397.7,196.1%22/%3E%3Cpolygon points=%22366,176.6 326.3,223.9 405.7,223.9%22/%3E%3Cpolygon points=%22366,204.4 318.3,251.7 413.7,251.7%22/%3E%3Crect x=%22435%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22438,25.0 398.1,104.9 477.9,104.9%22/%3E%3Cpolygon points=%22438,72.0 384.5,151.9 491.5,151.9%22/%3E%3Cpolygon points=%22438,119.0 370.9,198.9 505.1,198.9%22/%3E%3Cpolygon points=%22438,166.0 357.3,245.9 518.7,245.9%22/%3E%3Crect x=%22502%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22505,62.0 471.3,129.3 538.7,129.3%22/%3E%3Cpolygon points=%22505,101.6 459.9,168.9 550.1,168.9%22/%3E%3Cpolygon points=%22505,141.2 448.5,208.5 561.5,208.5%22/%3E%3Cpolygon points=%22505,180.8 437.0,248.1 573.0,248.1%22/%3E%3Crect x=%22569%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22572,118.0 547.9,166.3 596.1,166.3%22/%3E%3Cpolygon points=%22572,146.4 539.7,194.7 604.3,194.7%22/%3E%3Cpolygon points=%22572,174.8 531.4,223.1 612.6,223.1%22/%3E%3Cpolygon points=%22572,203.2 523.2,251.5 620.8,251.5%22/%3E%3Crect x=%22637%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22640,84.0 610.1,143.8 669.9,143.8%22/%3E%3Cpolygon points=%22640,119.2 599.9,179.0 680.1,179.0%22/%3E%3Cpolygon points=%22640,154.4 589.7,214.2 690.3,214.2%22/%3E%3Cpolygon points=%22640,189.6 579.6,249.4 700.4,249.4%22/%3E%3Crect x=%22673%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22676,56.0 641.3,125.4 710.7,125.4%22/%3E%3Cpolygon points=%22676,96.8 629.5,166.2 722.5,166.2%22/%3E%3Cpolygon points=%22676,137.6 617.7,207.0 734.3,207.0%22/%3E%3Cpolygon points=%22676,178.4 605.9,247.8 746.1,247.8%22/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom;mask:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 700 260%22 width=%22700%22 height=%22260%22%3E%3Cg fill=%22%23000%22%3E%3Crect x=%2231%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2234,89.0 4.9,147.1 63.1,147.1%22/%3E%3Cpolygon points=%2234,123.2 -5.0,181.3 73.0,181.3%22/%3E%3Cpolygon points=%2234,157.4 -14.8,215.5 82.8,215.5%22/%3E%3Cpolygon points=%2234,191.6 -24.7,249.7 92.7,249.7%22/%3E%3Crect x=%2295%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%2298,111.0 72.7,161.7 123.3,161.7%22/%3E%3Cpolygon points=%2298,140.8 64.1,191.5 131.9,191.5%22/%3E%3Cpolygon points=%2298,170.6 55.4,221.3 140.6,221.3%22/%3E%3Cpolygon points=%2298,200.4 46.8,251.1 149.2,251.1%22/%3E%3Crect x=%22157%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22160,80.0 129.4,141.2 190.6,141.2%22/%3E%3Cpolygon points=%22160,116.0 119.0,177.2 201.0,177.2%22/%3E%3Cpolygon points=%22160,152.0 108.6,213.2 211.4,213.2%22/%3E%3Cpolygon points=%22160,188.0 98.2,249.2 221.8,249.2%22/%3E%3Crect x=%22229%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22232,47.0 195.8,119.4 268.2,119.4%22/%3E%3Cpolygon points=%22232,89.6 183.5,162.0 280.5,162.0%22/%3E%3Cpolygon points=%22232,132.2 171.2,204.6 292.8,204.6%22/%3E%3Cpolygon points=%22232,174.8 158.9,247.2 305.1,247.2%22/%3E%3Crect x=%22297%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22300,124.0 276.9,170.2 323.1,170.2%22/%3E%3Cpolygon points=%22300,151.2 269.0,197.4 331.0,197.4%22/%3E%3Cpolygon points=%22300,178.4 261.2,224.6 338.8,224.6%22/%3E%3Cpolygon points=%22300,205.6 253.3,251.8 346.7,251.8%22/%3E%3Crect x=%22363%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22366,121.0 342.4,168.3 389.6,168.3%22/%3E%3Cpolygon points=%22366,148.8 334.3,196.1 397.7,196.1%22/%3E%3Cpolygon points=%22366,176.6 326.3,223.9 405.7,223.9%22/%3E%3Cpolygon points=%22366,204.4 318.3,251.7 413.7,251.7%22/%3E%3Crect x=%22435%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22438,25.0 398.1,104.9 477.9,104.9%22/%3E%3Cpolygon points=%22438,72.0 384.5,151.9 491.5,151.9%22/%3E%3Cpolygon points=%22438,119.0 370.9,198.9 505.1,198.9%22/%3E%3Cpolygon points=%22438,166.0 357.3,245.9 518.7,245.9%22/%3E%3Crect x=%22502%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22505,62.0 471.3,129.3 538.7,129.3%22/%3E%3Cpolygon points=%22505,101.6 459.9,168.9 550.1,168.9%22/%3E%3Cpolygon points=%22505,141.2 448.5,208.5 561.5,208.5%22/%3E%3Cpolygon points=%22505,180.8 437.0,248.1 573.0,248.1%22/%3E%3Crect x=%22569%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22572,118.0 547.9,166.3 596.1,166.3%22/%3E%3Cpolygon points=%22572,146.4 539.7,194.7 604.3,194.7%22/%3E%3Cpolygon points=%22572,174.8 531.4,223.1 612.6,223.1%22/%3E%3Cpolygon points=%22572,203.2 523.2,251.5 620.8,251.5%22/%3E%3Crect x=%22637%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22640,84.0 610.1,143.8 669.9,143.8%22/%3E%3Cpolygon points=%22640,119.2 599.9,179.0 680.1,179.0%22/%3E%3Cpolygon points=%22640,154.4 589.7,214.2 690.3,214.2%22/%3E%3Cpolygon points=%22640,189.6 579.6,249.4 700.4,249.4%22/%3E%3Crect x=%22673%22 y=%22242%22 width=%226%22 height=%2218%22/%3E%3Cpolygon points=%22676,56.0 641.3,125.4 710.7,125.4%22/%3E%3Cpolygon points=%22676,96.8 629.5,166.2 722.5,166.2%22/%3E%3Cpolygon points=%22676,137.6 617.7,207.0 734.3,207.0%22/%3E%3Cpolygon points=%22676,178.4 605.9,247.8 746.1,247.8%22/%3E%3C/g%3E%3C/svg%3E") repeat-x left bottom}
+.pines.far{height:240px;background:var(--pine-far);-webkit-mask-size:auto 240px;mask-size:auto 240px;opacity:.85;bottom:6vh}
+.pines.near{height:170px;background:var(--pine-near);-webkit-mask-size:auto 170px;mask-size:auto 170px;-webkit-mask-position:-300px bottom;mask-position:-300px bottom}
+.trunk{position:absolute;top:0;bottom:0;width:clamp(14px,calc((100vw - 1100px) / 2 + 60px),210px);filter:var(--trunk-filter);
+  background-repeat:repeat-y;background-size:210px auto}
+.trunk.l{left:0;background-image:url(trunk-l.webp);background-position:left top}
+.trunk.r{right:0;background-image:url(trunk-r.webp);background-position:right top}
 .content{position:relative;z-index:1}
 
 /* living forest scene */
@@ -111,7 +117,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:1}}
 .ff{width:7px;height:7px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px 4px var(--glow-soft);animation:drift var(--dur) ease-in-out var(--delay) infinite,twinkle var(--tw) ease-in-out var(--delay) infinite}
 @media(max-width:640px){.bee~.bee,.ff:nth-child(n+5),.leaf:nth-child(n+8),.bfly~.bfly{display:none}}
-@media(prefers-reduced-motion:reduce){.fx,.rays{display:none}}
+@media(prefers-reduced-motion:reduce){.fx,.rays{display:none}.trunk{background-position-y:0!important}}
 
 /* scroll reveal and small delights */
 .rv{transform:translateY(26px);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -315,8 +321,6 @@ details p{color:var(--muted);margin-top:10px}
 
 /* footer meadow */
 .foot{margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-top:30px;position:relative}
-.foot .m{height:84px;background:url(meadow.webp) center bottom/auto 100% repeat-x;
-  }
 .foot .band{background:var(--night);color:var(--on-night);text-align:center;font-size:.92rem;
   padding:20px max(16px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .foot .band b{font-family:var(--display);font-weight:400;font-size:1.05rem;display:block;margin-bottom:4px}
@@ -339,6 +343,9 @@ details p{color:var(--muted);margin-top:10px}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <div class="scene" aria-hidden="true">
   <div class="rays"></div>
+  <div class="trunk l"></div><div class="trunk r"></div>
+  <div class="pines far" id="pinesFar"></div>
+  <div class="pines near" id="pinesNear"></div>
 </div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 
@@ -374,7 +381,7 @@ details p{color:var(--muted);margin-top:10px}
       <div class="bookwrap">
         <div class="float">
           <span class="sp" style="left:-2%;top:8%"></span><span class="sp" style="right:-3%;top:30%;animation-delay:1s"></span><span class="sp" style="left:6%;bottom:6%;animation-delay:2s"></span><span class="sp" style="right:4%;bottom:-2%;animation-delay:.5s;width:16px;height:16px"></span>
-          <div class="book" id="book"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" decoding="async" fetchpriority="high"></div>
+          <div class="book" id="book"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" decoding="async" fetchpriority="high"><span class="pricetag"><b id="priceTagHero">$9.99</b><small>Digital edition</small></span></div>
         </div>
       </div>
     </div>
@@ -457,6 +464,9 @@ details p{color:var(--muted);margin-top:10px}
       <a class="post" href="blog-kindness-bedtime-stories.html" data-cat="parenting"><div class="th" style="background-image:url(canopy.webp)"></div><div class="bd"><small>Parenting · 5 min read</small><h3>Teaching kindness through bedtime stories</h3><p>Simple ways to turn a story into a conversation about how we treat others.</p><span class="more">Read more →</span></div></a>
       <a class="post" href="blog-character-education-activities.html" data-cat="classroom"><div class="th" style="background-image:url(animals.webp);background-position:50% 40%"></div><div class="bd"><small>Classroom · 6 min read</small><h3>Character education activities for young learners</h3><p>Discussion starters and small projects that help one virtue stick at a time.</p><span class="more">Read more →</span></div></a>
       <a class="post" href="blog-weekly-virtue-habit.html" data-cat="family"><div class="th" style="background-image:url(meadow.webp)"></div><div class="bd"><small>Family · 4 min read</small><h3>A weekly virtue habit for the whole family</h3><p>Pick one virtue a week and look for it in everyday moments together.</p><span class="more">Read more →</span></div></a>
+      <a class="post" href="blog-talking-about-honesty.html" data-cat="parenting"><div class="th" style="background-image:url(forest-bg.webp)"></div><div class="bd"><small>Parenting · 4 min read</small><h3>Talking to kids about honesty</h3><p>Honest conversations start small — how to make telling the truth the easier choice.</p><span class="more">Read more →</span></div></a>
+      <a class="post" href="blog-teaching-courage.html" data-cat="classroom"><div class="th" style="background-image:url(cover.webp)"></div><div class="bd"><small>Classroom · 5 min read</small><h3>Teaching courage to young children</h3><p>Courage is not the absence of fear — it is trying anyway. Small moments build it best.</p><span class="more">Read more →</span></div></a>
+      <a class="post" href="blog-gratitude-habits.html" data-cat="family"><div class="th" style="background-image:url(meadow.webp)"></div><div class="bd"><small>Family · 4 min read</small><h3>Gratitude habits for little hearts</h3><p>A minute of thankfulness a day helps children notice the good already around them.</p><span class="more">Read more →</span></div></a>
     </div>
   </section>
 
@@ -482,8 +492,8 @@ details p{color:var(--muted);margin-top:10px}
         <ul class="tick"><li>30 virtues in one book</li><li>Ages 4–8 · 60 pages (30 stories + 30 activities)</li><li>Read on any screen</li><li>A gift that grows with the child</li></ul>
       </div>
       <div class="card">
-        <figure class="coverbuy"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" loading="lazy" decoding="async"><span class="pricetag"><b id="priceTag">$9.99</b><small>Digital edition</small></span></figure>
-        <div class="row"><b>Little Values, Big Impact</b><span class="price" id="price">Price</span></div>
+        <figure class="coverbuy"><img src="cover.webp" alt="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book titled Be Kind" width="760" height="950" loading="lazy" decoding="async"></figure>
+        <div class="row"><b>Little Values, Big Impact</b><span class="price" id="price">$9.99</span></div>
         <small>Digital edition · by Kindling Tales</small>
         <a class="btn" id="buyBtn" href="#buy">Buy now</a>
         <form class="news" id="news">
@@ -499,7 +509,6 @@ details p{color:var(--muted);margin-top:10px}
 </main>
 
 <footer class="foot">
-  <div class="m" aria-hidden="true"></div>
   <div class="band"><b>Little Values, Big Impact</b>One brave, kind heart at a time · © <span id="yr"></span> All rights reserved</div>
 </footer>
 </div>
@@ -509,8 +518,8 @@ details p{color:var(--muted);margin-top:10px}
   /* EDIT HERE: set your price and checkout link (Gumroad, Stripe, Shopify, Etsy, etc.). Until buyUrl is set, Buy now scrolls back to this card — it does NOT take payment. */
   var SETTINGS={price:'$9.99',buyUrl:''};
 
-  var price=document.getElementById('price'),buy=document.getElementById('buyBtn');
-  if(SETTINGS.price){price.textContent=SETTINGS.price;var pt=document.getElementById('priceTag');if(pt)pt.textContent=SETTINGS.price}
+  var buy=document.getElementById('buyBtn');
+  if(SETTINGS.price){var pr=document.getElementById('price');if(pr)pr.textContent=SETTINGS.price;var pth=document.getElementById('priceTagHero');if(pth)pth.textContent=SETTINGS.price}
   if(SETTINGS.buyUrl){buy.href=SETTINGS.buyUrl;buy.target='_blank';buy.rel='noopener'}
   document.getElementById('yr').textContent=new Date().getFullYear();
 
@@ -725,4 +734,35 @@ details p{color:var(--muted);margin-top:10px}
 })();
 </script>
 
+<script>
+// Share links: index.html#read-<slug> opens the article page.
+(function(){var m={kindness:"blog-kindness-bedtime-stories.html",classroom:"blog-character-education-activities.html","family-habit":"blog-weekly-virtue-habit.html",honesty:"blog-talking-about-honesty.html",courage:"blog-teaching-courage.html",gratitude:"blog-gratitude-habits.html"};var h=location.hash||"";if(h.indexOf("#read-")===0){var s=h.slice(6);if(m[s]){location.replace(m[s]);}}})();
+</script>
+<script>
+// Smooth return: open a blog article (or any page) and come back, and glide to the same spot instead of jumping to the top.
+(function(){
+  if('scrollRestoration' in history){ try{ history.scrollRestoration='manual'; }catch(e){} }
+  var _p=location.pathname.replace(/\/index\.html$/,'')||'/';
+  var KEY='lv-scroll-'+_p;
+  var t=null;
+  function save(){ try{ sessionStorage.setItem(KEY,String(window.scrollY||0)); }catch(e){} }
+  window.addEventListener('scroll',function(){ if(t) return; t=setTimeout(function(){ t=null; save(); },150); },{passive:true});
+  window.addEventListener('beforeunload',save);
+  document.addEventListener('click',function(e){ if(e.target.closest('a[href]')) save(); });
+  // Restore instantly, right now (this script runs at end of body, before first paint),
+  // so the page opens directly on the section you left, never flashing the hero first.
+  (function restore(){
+    var nav=null; try{ nav=performance.getEntriesByType('navigation')[0]; }catch(e){}
+    var wantFlag=false;
+    try{ wantFlag = sessionStorage.getItem('lv-restore')==='1'; if(wantFlag) sessionStorage.removeItem('lv-restore'); }catch(e){}
+    // Restore on back/forward/reload, or when the Back-to-blog link asked for the exact spot.
+    if(!wantFlag && (!nav || (nav.type!=='back_forward' && nav.type!=='reload'))) return;
+    if(location.hash) return;
+    var y=null; try{ y=parseInt(sessionStorage.getItem(KEY),10); }catch(e){}
+    if(y===null || isNaN(y) || y<=0) return;
+    var _root=document.documentElement, _prev=_root.style.scrollBehavior;
+    _root.style.scrollBehavior='auto'; window.scrollTo(0, y); _root.style.scrollBehavior=_prev;
+  })();
+})();
+</script>
 </body></html>
