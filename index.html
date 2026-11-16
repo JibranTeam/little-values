@@ -2,25 +2,24 @@
 <title>Little Values, Big Impact | 30 Virtues for Kind, Confident Kids</title>
 <meta name="description" content="Little Values, Big Impact is a digital children's book with 30 virtues — kindness, courage, honesty and more — for bedtime reading, classrooms and family conversations. Preview the first pages free.">
 <meta name="theme-color" content="#F7EFD2">
-<!-- TODO before launch: replace example.com with your real domain in the canonical, og:url and JSON-LD URLs below. -->
-<link rel="canonical" href="https://example.com/">
+<link rel="canonical" href="https://little-values-tau.vercel.app/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Little Values, Big Impact | 30 Virtues for Kind, Confident Kids">
 <meta property="og:description" content="30 timeless virtues help little hearts grow into kind, confident and compassionate individuals. Preview the book free.">
-<meta property="og:url" content="https://example.com/">
-<meta property="og:image" content="https://example.com/cover.webp">
+<meta property="og:url" content="https://little-values-tau.vercel.app/">
+<meta property="og:image" content="https://little-values-tau.vercel.app/cover.webp">
 <meta property="og:image:alt" content="Cover of Little Values, Big Impact: woodland animals gathered around a bear reading a book">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Little Values, Big Impact | 30 Virtues for Kind, Confident Kids">
 <meta name="twitter:description" content="30 timeless virtues for bedtime reading, classrooms and family conversations. Preview the first pages free.">
-<meta name="twitter:image" content="https://example.com/cover.webp">
+<meta name="twitter:image" content="https://little-values-tau.vercel.app/cover.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 22'%3E%3Cpath d='M12 21C-3 11 3 1 9 1c2 0 3 1 3 3 0-2 1-3 3-3 6 0 12 10-3 20z' fill='%235E9A3F'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Nunito+Sans:wght@400;600;800&display=swap">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Book","name":"Little Values, Big Impact","bookFormat":"https://schema.org/EBook","inLanguage":"en","numberOfPages":60,"url":"https://example.com/","image":"https://example.com/cover.webp","description":"A digital children's book with 30 virtues for bedtime reading, classrooms and family conversations.","author":{"@type":"Organization","name":"Kindling Tales"},"publisher":{"@type":"Organization","name":"Kindling Tales"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8}}
+{"@context":"https://schema.org","@type":"Book","name":"Little Values, Big Impact","bookFormat":"https://schema.org/EBook","inLanguage":"en","numberOfPages":60,"url":"https://little-values-tau.vercel.app/","image":"https://little-values-tau.vercel.app/cover.webp","description":"A digital children's book with 30 virtues for bedtime reading, classrooms and family conversations.","author":{"@type":"Organization","name":"Kindling Tales"},"publisher":{"@type":"Organization","name":"Kindling Tales"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -266,7 +265,8 @@ a{color:inherit}
 .thumb .tnum{display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-weight:900;color:var(--forest);background:#F7EDCF}
 .ctrl{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:16px auto 0;flex-wrap:wrap;max-width:460px}
 .count{font-weight:800;font-variant-numeric:tabular-nums}
-.drop{margin:22px auto 0;max-width:620px;border:2px dashed var(--leaf);border-radius:18px;padding:20px;text-align:center;background:#ffffff30}
+.drop{display:none;margin:22px auto 0;max-width:620px;border:2px dashed var(--leaf);border-radius:18px;padding:20px;text-align:center;background:#ffffff30}
+.drop.admin{display:block}
 .drop.over{background:#ffffff66}
 .drop h3{font-size:1.15rem}
 .drop p{color:var(--muted);margin:6px 0 12px;font-size:.94rem}
@@ -424,7 +424,7 @@ details p{color:var(--muted);margin-top:10px}
     <div class="hd">
       <span class="ribbon"><span>Free preview</span></span>
       <h2>Turn the first pages</h2>
-      <p class="lead">See the artwork and words before you buy. Load up to 10 pages — images or a PDF — and flip through them right in your browser. Every preview page carries a Kindling Tales watermark.</p>
+      <p class="lead">See the artwork and words before you buy. Flip through the first pages right in your browser. Every preview page carries a Kindling Tales watermark.</p>
     </div>
     <div class="reader">
       <div class="spread" id="spread" aria-live="polite"></div>
@@ -692,6 +692,7 @@ details p{color:var(--muted);margin-top:10px}
     }catch(err){msg.textContent=err.message||'Could not read those files.'}
   }
   var pick=document.getElementById('pagesFile'),drop=document.getElementById('drop');
+  if(new URLSearchParams(location.search).get('admin')==='1'){drop.classList.add('admin')}
   pick.addEventListener('change',function(){handle(pick.files);pick.value=''});
   document.getElementById('pickBtn').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick.click()}});
   ['dragenter','dragover'].forEach(function(t){drop.addEventListener(t,function(e){e.preventDefault();drop.classList.add('over')})});
