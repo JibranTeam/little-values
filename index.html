@@ -39,7 +39,7 @@
   --wood1:#80532C; --wood2:#5A3719; --on-wood:#FFF3D6;
   --ribbon:#E7CF93; --night:#3A2A18; --on-night:#F4EBD0;
   --btn-text:#FFFFFF; --shadow:rgba(20,30,10,.35);
-  --sky:linear-gradient(180deg,#FBE9A9 0%,#F1E8AB 42%,#E0E4A0 66%,#B5CF72 84%,#6FA85A 100%);
+  --sky:url(forest-bg-complete.webp) center/cover no-repeat;
   --pine-far:#9CC178; --pine-near:#5A9448; --rays:rgba(255,246,196,.22);
   --glow:#FFF1A8; --glow-soft:rgba(255,200,70,.6); --trunk-filter:none;
   --display:'Young Serif',Georgia,'Times New Roman',serif;
@@ -341,12 +341,7 @@ details p{color:var(--muted);margin-top:10px}
 <a class="skip" href="#top">Skip to content</a>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<div class="scene" aria-hidden="true">
-  <div class="rays"></div>
-  <div class="trunk l"></div><div class="trunk r"></div>
-  <div class="pines far" id="pinesFar"></div>
-  <div class="pines near" id="pinesNear"></div>
-</div>
+<div class="scene" aria-hidden="true"></div>
 <div class="fx" id="fx" aria-hidden="true"></div>
 
 <div class="content">
