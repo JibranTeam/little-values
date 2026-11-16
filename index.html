@@ -225,7 +225,7 @@ a{color:inherit}
 .about h2{margin-top:14px}
 
 /* virtues */
-.virtues{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:32px}
+.virtues{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
 .v{display:flex;align-items:center;gap:10px;background:#ffffff40;border:1px solid var(--line);border-radius:999px;padding:11px 16px;min-width:0}
 :root[data-theme="dark"] .v{background:#ffffff0d}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .v{background:#ffffff0d}}
@@ -445,7 +445,6 @@ details p{color:var(--muted);margin-top:10px}
       <p class="lead">Each virtue gets its own moment, so children can learn one idea at a time and come back to their favorites.</p>
     </div>
     <div class="virtues" id="virtueGrid"></div>
-    <p class="note">A sample of the virtues covered. The full list of thirty is inside the book.</p>
 
     <div class="signwrap">
       <div class="sign"><small>A timeless gift for</small><h2>Children · Parents · Teachers and future leaders</h2></div>
@@ -599,7 +598,7 @@ details p{color:var(--muted);margin-top:10px}
     }
   }
 
-  var vs=['Kindness','Courage','Honesty','Gratitude','Patience','Respect','Sharing','Responsibility','Empathy','Forgiveness','Perseverance','Humility'];
+  var vs=['Patience','Kindness','Perseverance','Be Yourself','Sharing','Helping Others','Hope','Gratitude','Respect','Responsibility','Courage','Learning','Reflection','Love &amp; Empathy','Honesty','Determination','Friendship','Work Smart','Creativity','Forgiveness','Discipline','Curiosity','Teamwork','Self Control','Listening','Good Manners','Caring for Nature','Asking for Help','Problem Solving','Healthy Habits'];
   var grid=document.getElementById('virtueGrid');
   vs.forEach(function(v){var d=document.createElement('div');d.className='v';d.innerHTML='<b>'+v+'</b>';grid.appendChild(d)});
 
