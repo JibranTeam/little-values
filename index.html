@@ -460,7 +460,7 @@ details p{color:var(--muted);margin-top:10px}
     <div class="hd">
       <span class="ribbon"><span>Free preview</span></span>
       <h2>Turn the first pages</h2>
-      <p class="lead">See the artwork and words before you buy. Flip through the first pages right in your browser. Every preview page carries a Kindling Tales watermark.</p>
+      <p class="lead">See the artwork and words before you buy. Flip through a few pages right in your browser. Every preview page carries a Kindling Tales watermark.</p>
     </div>
     <div class="reader">
       <div class="spread" id="spread" aria-live="polite"></div>
@@ -613,7 +613,9 @@ details p{color:var(--muted);margin-top:10px}
     sample(3,'#F3DDB8','<path d="M150 92 L220 240 H80Z" fill="#6B4423" stroke="#23331F" stroke-width="5" stroke-linejoin="round"/>'),
     sample(4,'#E9F1D8','<circle cx="112" cy="170" r="48" fill="#5E9A3F" stroke="#23331F" stroke-width="5"/><circle cx="188" cy="170" r="48" fill="#E58A1F" stroke="#23331F" stroke-width="5"/>')
   ].map(function(s){return {html:s}});
-  var pages=samples.slice(),idx=0,urls=[];
+  function savedPage(){try{var n=parseInt(localStorage.getItem('lv-preview-page'),10);return isNaN(n)?0:n}catch(e){return 0}}
+  function storePage(){try{localStorage.setItem('lv-preview-page',String(idx))}catch(e){}}
+  var pages=samples.slice(),idx=savedPage(),urls=[];
 
   function setOrientation(w,h){
     if(!w||!h)return;
@@ -632,6 +634,7 @@ details p{color:var(--muted);margin-top:10px}
     return d;
   }
   function render(){
+    idx=Math.max(0,Math.min(pages.length-1,idx));
     spreadEl.textContent='';
     spreadEl.appendChild(node(pages[idx]));
     countEl.textContent='Page '+(idx+1)+' of '+pages.length;
@@ -639,6 +642,7 @@ details p{color:var(--muted);margin-top:10px}
     pv.disabled=idx===0;nx.disabled=idx+1>=pages.length;
     pv.style.opacity=pv.disabled?.4:1;nx.style.opacity=nx.disabled?.4:1;
     renderThumbs();
+    storePage();
   }
   function renderThumbs(){
     var t=document.getElementById('thumbs');if(!t)return;t.textContent='';
@@ -760,7 +764,7 @@ details p{color:var(--muted);margin-top:10px}
   });
   fetch('/api/pages').then(function(r){if(!r.ok)throw new Error('no api');return r.json()}).then(function(list){
     if(!list||!list.length)return;
-    pages=list.map(function(p){return {src:p.url,name:p.file_name}});custom=true;idx=0;render();
+    pages=list.map(function(p){return {src:p.url,name:p.file_name}});custom=true;idx=Math.max(0,Math.min(list.length-1,savedPage()));render();
     msg.textContent=pages.length+' saved page'+(pages.length>1?'s':'')+' loaded from the database.';
   }).catch(function(){});
   render();
